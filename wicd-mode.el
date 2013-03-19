@@ -60,6 +60,11 @@
   :group 'wicd
   )
 
+(defface wicd-connected
+    '((t (:foreground "green")))
+  "Face used to highlight connected wicd connections."
+  :group 'wicd)
+
 (defgroup wicd-dbus
   nil
   "Parameters for communication with wicd-daemon using D-Bus."
@@ -105,7 +110,7 @@ OBJ is one of :deamon, :wired or :wireless"
     (:wired (concat wicd-dbus-name ".wired"))
     (:wireless (concat wicd-dbus-name ".wireless"))
     ))
-(defun wicd-dbus-path (OBJ)
+(defun wicd-dbus-path (obj)
   "return path of dbus object OBJ
 OBJ is one of :deamon, :wired or :wireless"
   (case obj
@@ -193,7 +198,7 @@ OBJ is one of :deamon, :wired or :wireless"
                                      wicd-wireless-prop-list
                                      )))
               (when (= (wicd-wireless-connected) i)
-                (overlay-put (make-overlay start (point)) 'face 'bold)
+                (overlay-put (make-overlay start (point)) 'face 'wicd-connected)
                 )
               (insert "\n")
               (setq i (+ 1 i))
